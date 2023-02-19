@@ -4,6 +4,8 @@
   --title-text-color: #2e2f42;
   --accent-color: #4d5ae5;
   --hover-bg-color: #404bbf;
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --time: 250ms;
 }
 
 body {
@@ -58,7 +60,7 @@ img {
 .header {
   border-bottom: 1px solid #e7e9fc;
   padding-top: 24px;
-  padding-bottom: 24px;
+  padding-bottom: 27px;
 
   background-color: #ffffff;
 }
@@ -86,6 +88,7 @@ img {
   font-size: 18px;
   line-height: 1.33;
   color: #2e2f42;
+  transition: color var(--time) var(--timing-function);
 }
 
 .logo .accent {
@@ -105,11 +108,29 @@ img {
   margin-right: 40px;
 }
 
+.header-item {
+  position: relative;
+}
+
 .header-link {
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   color: var(--title-text-color);
+  transition: color var(--time) var(--timing-function);
+}
+
+.header-link::after {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: calc(100% + 24px);
+  display: inline-block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--hover-bg-color);
+  opacity: 0;
 }
 
 .header-link:hover,
@@ -117,8 +138,12 @@ img {
   color: var(--hover-bg-color);
 }
 
-.active {
+.header-link.active {
   color: var(--hover-bg-color);
+}
+
+.header-link.active::after {
+  opacity: 1;
 }
 
 .header-mail,
@@ -127,6 +152,7 @@ img {
   font-size: 16px;
   line-height: 1.5;
   color: inherit;
+  transition: color var(--time) var(--timing-function);
 }
 
 .address-list {
@@ -148,7 +174,6 @@ img {
 
 .overlay {
   max-width: 1440px;
-  /* height: 600px; */
   margin-left: auto;
   margin-right: auto;
 
@@ -193,11 +218,90 @@ img {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 
   cursor: pointer;
+
+  transition: background-color var(--time) var(--timing-function);
 }
 
 .hero-btn:hover,
 .hero-btn:focus {
   background-color: var(--hover-bg-color);
+}
+
+/* --------MODAL-------- */
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 47, 66, 0.4);
+  opacity: 1;
+  visibility: visible;
+
+  transition: opacity var(--time) var(--timing-function),
+    visibility var(--time) var(--timing-function);
+}
+
+.modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+
+  width: 408px;
+  height: 576px;
+  border-radius: 4px;
+
+  background-color: #fcfcfc;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+
+  transition: transform var(--time) var(--timing-function);
+}
+
+.modal-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+
+  color: #000000;
+  background-color: #e7e9fc;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  transition: color var(--time) var(--timing-function),
+    background-color var(--time) var(--timing-function);
+}
+
+.modal-btn-icon {
+  fill: currentColor;
+}
+
+.modal-btn:hover,
+.modal-btn:focus {
+  color: #ffffff;
+  background-color: var(--hover-bg-color);
+  border-color: transparent;
+}
+
+.backdrop.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 /* --------OUR ADVANTAGES-------- */
@@ -326,13 +430,15 @@ img {
   justify-content: center;
   align-items: center;
 
-  background: var(--accent-color);
+  background-color: var(--accent-color);
   border-radius: 50%;
+
+  transition: background-color var(--time) var(--timing-function);
 }
 
 .team-soc-link:hover,
 .team-soc-link:focus {
-  background: var(--hover-bg-color);
+  background-color: var(--hover-bg-color);
 }
 
 /* --------Customers-------- */
@@ -363,6 +469,9 @@ img {
 
   border: 1px solid #8e8f99;
   border-radius: 4px;
+
+  transition: color var(--time) var(--timing-function),
+    border-color var(--time) var(--timing-function);
 }
 
 .customer-link:hover,
@@ -394,6 +503,7 @@ img {
   font-size: 18px;
   line-height: 1.17;
   color: #f4f4fd;
+  transition: color var(--time) var(--timing-function);
 }
 
 .footer-text {
@@ -429,13 +539,15 @@ img {
   justify-content: center;
   align-items: center;
 
-  background: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
+
+  transition: background-color var(--time) var(--timing-function);
 }
 
 .footer-soc-link:hover,
 .footer-soc-link:focus {
-  background: #31d0aa;
+  background-color: #31d0aa;
 }
 
 /* -------------PORTFOLIO PAGE------------- */
@@ -472,6 +584,11 @@ img {
   background-color: #f4f4fd;
 
   cursor: pointer;
+
+  transition: color var(--time) var(--timing-function),
+    background-color var(--time) var(--timing-function),
+    box-shadow var(--time) var(--timing-function),
+    border-color var(--time) var(--timing-function);
 }
 
 .examples-btn:hover,
@@ -495,6 +612,8 @@ img {
   flex-basis: calc((100% - 48px) / 3);
 
   background-color: #ffffff;
+
+  transition: box-shadow var(--time) var(--timing-function);
 }
 
 .examples-item:hover,
@@ -516,15 +635,35 @@ img {
   line-height: 1.5;
   color: var(--primary-text-color);
 }
-.examples-hover-text {
-  display: none;
-  padding: 40px 32px;
-  min-height: 300px;
 
+.examples-thumb {
+  position: relative;
+  overflow: hidden;
+}
+
+.examples-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  padding: 40px 32px;
+  background-color: var(--accent-color);
+
+  transform: translateY(100%);
+  transition: transform var(--time) var(--timing-function);
+}
+
+.examples-overlay-text {
   font-size: 16px;
   line-height: 1.5;
   color: #f4f4fd;
-  background-color: var(--hover-bg-color);
+}
+
+.examples-item:hover .examples-overlay,
+.examples-item:focus .examples-overlay {
+  transform: translateY(0);
 }
 
 .card-border {
